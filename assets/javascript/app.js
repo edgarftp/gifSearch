@@ -43,6 +43,7 @@ $("document").ready(function() {
         if (newSearch != ""){
             searchArray.push(newSearch);
             display_btns();
+            $("#searchInput").val("");
         }
     })
     $("#searchInput").on("keypress", function(e){
@@ -50,6 +51,7 @@ $("document").ready(function() {
         if (newSearch != "" && e.which == 13){
             searchArray.push(newSearch);
             display_btns();
+            $("#searchInput").val("");
         }
     })
 
