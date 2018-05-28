@@ -17,7 +17,7 @@ $("document").ready(function () {
             imgTrash.attr("src", "assets/images/trash.png");
             imgTrash.attr("id", "trashcanImg")
             dragZone.attr("id", "trashcan");
-            dragZone.attr("class", "btn btn-danger m-1 col-1 btn-sm  dropzone");
+            dragZone.attr("class", "btn btn-danger m-1 col-2 col-md-1 btn-sm  dropzone");
             dragZone.append(imgTrash);
             $("#btnHolder").append(dragZone);
         for (i = 0; i < searchArray.length; i++) {
