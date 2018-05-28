@@ -19,13 +19,10 @@ body {
     margin: 10px 10px;
 }
 .gifRow {
-    
     margin: 10px 10px;
 }
 .newRow{
     margin: 10px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid white;
 }
 .divHeader{
     text-align: center;
@@ -35,5 +32,14 @@ body {
 }
 
 .gif {
-    margin: 10px;
+    margin: 10px 0px;
+    
+}
+.btnRow{
+    margin: 2px 10px;
+    border-bottom: 2px solid white;
+    text-align: center;
+}
+.imgBtnHolder {
+    text-align: center;
 }

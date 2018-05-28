@@ -5,6 +5,10 @@ $("document").ready(function() {
     var randArray=[];
     var randNum;
     var disabledArray = [];
+    var clipboard = new ClipboardJS('.copyBtn');
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
 
     function display_btns() {
         $("#btnHolder").empty();
@@ -73,34 +77,56 @@ $("document").ready(function() {
             method: "GET"
         }).then(function(response){
             result = response.data;
+            console.log(result);
             rand_num(result.length,4);
             var newRow = $("<div>");
             newRow.addClass("row newRow");
             newRow.attr("id", "newRow" + id);
+            var divHeaderRow = $("<div>");
+            divHeaderRow.addClass("row col-md-12");
             var divHeader = $("<div>");
-            divHeader.addClass("col-lg-11 d-inline divHeader");
+            divHeader.addClass("col-md-11 d-inline divHeader");
             divHeader.text(name);
             var closeBtn = $("<button>");
             closeBtn.text("x");
-            closeBtn.addClass("btn btn-danger btn-sm col-lg-1 d-inline closeBtn");
+            closeBtn.addClass("btn btn-danger btn-sm col-md-1 d-inline closeBtn");
             closeBtn.attr("data-close", id);
-            newRow.append(divHeader);
-            newRow.append(closeBtn);
+            divHeaderRow.append(divHeader);
+            divHeaderRow.append(closeBtn);
+            newRow.append(divHeaderRow);
 
+            
             var divGifHolder= $("<div>");
-            divGifHolder.addClass("row col-lg-12 gifRow");
+            divGifHolder.addClass("row col-md-12 gifRow");
             divGifHolder.attr("id", gif);
             for (i=0; i<randArray.length; i++) {
+                var imgBtnHolder = $("<div>");
+                imgBtnHolder.addClass("col-md-3 d-inline imgBtnHolder");
+                var imgHolder = $("<div>");
+                imgHolder.addClass("col-12");
                 var img = $("<img>");
-                img.attr("src", result[randArray[i]].images.fixed_width_still.url);
-                img.attr("data-still", result[randArray[i]].images.fixed_width_still.url);
-                img.attr("data-animate", result[randArray[i]].images.fixed_width.url);
+                img.attr("src", result[randArray[i]].images.fixed_width_small_still.url);
+                img.attr("data-still", result[randArray[i]].images.fixed_width_small_still.url);
+                img.attr("data-animate", result[randArray[i]].images.fixed_width_small.url);
                 img.attr("data-state", "still");
                 img.attr("id", gif + "-" + i);
-                img.addClass("col-lg-3 d-inline gif");
-                divGifHolder.append(img);
+                img.addClass("col-md-12 gif");
+                imgHolder.append(img);
+                var copyBtn = $("<button>").text("Copy to Clipboard");
+                copyBtn.attr("data-clipboard-text", result[randArray[i]].bitly_gif_url);
+                copyBtn.addClass("btn btn-info btn-sm copyBtn col-md-10 d-inline");
+                var btnHolder = $("<div>");
+                btnHolder.addClass("col-md-12");
+                btnHolder.append(copyBtn);
+                imgBtnHolder.append(imgHolder);
+                imgBtnHolder.append(btnHolder);
+                divGifHolder.append(imgBtnHolder);
+
             }
             newRow.append(divGifHolder);
+            
+
+        
             $("#gifHolder").prepend(newRow);
         })
 
@@ -119,15 +145,17 @@ $("document").ready(function() {
            }
         })
 
-        $(document.body).on("click", ".closeBtn", function(){
+        $(document.body).unbind().on("click", ".closeBtn", function(){
+            console.log(this);
             var id = $(this).attr("data-close");
             var index = disabledArray.indexOf(id);
-            disabledArray.splice(index, 1);
+            disabledArray.splice(index,1);
             $("#" + id).attr("disabled", false);
             $("#" + id).animate({opacity: 1}, "fast");
             $("#newRow" + id).remove();
-        }) 
-          
+        })
+      
+      
         
     })
 
