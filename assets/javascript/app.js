@@ -137,7 +137,12 @@ $("document").ready(function () {
             $("#gifHolder").prepend(newRow);
         })
     }
-      $(document.body).unbind().on("click",".gifBtn", function() {
+    $("#btnHolder").on("tap",".gifBtn", function() {
+        var id = this.id;
+        display_gif(id);
+        display_btns();
+    })
+      $("#btnHolder").on("click",".gifBtn", function() {
           var id = this.id;
           display_gif(id);
           display_btns();
