@@ -230,6 +230,7 @@ $("document").ready(function () {
             $("#" + id).remove();
             if(index >=0){
                 disabledArray.splice(index, 1);
+                $("#newRow" + id).remove();
             }
             searchArray.splice(id,1);
             },
