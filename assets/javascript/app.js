@@ -123,6 +123,7 @@ $("document").ready(function () {
                 img.addClass("col-md-12 gif");
                 imgHolder.append(img);
                 var copyBtn = $("<button>").text("Copy to Clipboard");
+                copyBtn.attr("id", "copyBtn-" + gif + "-" + i);
                 copyBtn.attr("data-clipboard-text", result[randArray[i]].bitly_gif_url);
                 copyBtn.addClass("btn btn-info btn-sm copyBtn col-md-10 d-inline");
                 var btnHolder = $("<div>");
@@ -273,6 +274,7 @@ $("document").ready(function () {
     }); 
 
     $("#gifHolder").on("click", ".newSearchBtn", function () {
+        console.log(randArray);
         var id = $(this).attr("data-research");
         var gif = searchArray[id];
         gif = gif.replace(/\s+/g, '');
@@ -291,14 +293,13 @@ $("document").ready(function () {
                 $("#" + gif + "-" + i).attr("data-still", result[randArray[i]].images.downsized_still.url);
                 $("#" + gif + "-" + i).attr("data-animate", result[randArray[i]].images.downsized.url);
                 $("#" + gif + "-" + i).attr("data-state", "still");
+                $("#copyBtn-" + gif + "-" + i).attr("data-clipboard-text", result[randArray[i]].bitly_gif_url);
             }
+            console.log(randArray);
         });
 
     }); 
 
-    $("#btnHolder").on("dragstart", ".gifBtn", function(){
-        console.log("hey");
-    });
 
 
     display_btns();
