@@ -78,17 +78,17 @@ $("document").ready(function() {
             newRow.addClass("row newRow");
             newRow.attr("id", "newRow" + id);
             var divHeader = $("<div>");
-            divHeader.addClass("col-11 d-inline divHeader");
+            divHeader.addClass("col-lg-11 d-inline divHeader");
             divHeader.text(name);
             var closeBtn = $("<button>");
             closeBtn.text("x");
-            closeBtn.addClass("btn btn-danger btn-sm col-1 d-inline closeBtn");
+            closeBtn.addClass("btn btn-danger btn-sm col-lg-1 d-inline closeBtn");
             closeBtn.attr("data-close", id);
             newRow.append(divHeader);
             newRow.append(closeBtn);
 
             var divGifHolder= $("<div>");
-            divGifHolder.addClass("row col-12 gifRow");
+            divGifHolder.addClass("row col-lg-12 gifRow");
             divGifHolder.attr("id", gif);
             for (i=0; i<randArray.length; i++) {
                 var img = $("<img>");
@@ -97,11 +97,11 @@ $("document").ready(function() {
                 img.attr("data-animate", result[randArray[i]].images.fixed_width.url);
                 img.attr("data-state", "still");
                 img.attr("id", gif + "-" + i);
-                img.addClass("col-3 d-inline gif");
+                img.addClass("col-lg-3 d-inline gif");
                 divGifHolder.append(img);
             }
             newRow.append(divGifHolder);
-            $("#gifHolder").append(newRow);
+            $("#gifHolder").prepend(newRow);
         })
 
         $("#gifHolder").unbind().on("click", "img", function(){
