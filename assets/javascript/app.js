@@ -4,6 +4,7 @@ $("document").ready(function() {
     var newSearch = "";
     var randArray=[];
     var randNum;
+    var disabledArray = [];
 
     function display_btns() {
         $("#btnHolder").empty();
@@ -12,6 +13,11 @@ $("document").ready(function() {
             newBtn.attr("id", i);
             newBtn.attr("class", "btn btn-success m-1 btn-sm gifBtn");
             $("#btnHolder").append(newBtn);
+        }
+
+        for (j=0; j<disabledArray.length;j++) {
+            $("#" + disabledArray[j]).attr("disabled", true);
+            $("#" + disabledArray[j]).css("opacity", "0.1");
         }
     }
 
@@ -49,6 +55,7 @@ $("document").ready(function() {
 
     $("#btnHolder").on("click", ".gifBtn", function(){
         var id = this.id;
+        disabledArray.push(id);     
         var name = searchArray[id];
         var gif = searchArray[id];
         gif = gif.replace(/\s+/g, '');
@@ -95,7 +102,7 @@ $("document").ready(function() {
             $("#gifHolder").append(newRow);
         })
 
-        $(document.body).on("click", ".gif", function(){
+        $("#gifHolder").unbind().on("click", "img", function(){
            console.log(this);
            var state = $(this).attr("data-state");
 
@@ -112,6 +119,8 @@ $("document").ready(function() {
 
         $(document.body).on("click", ".closeBtn", function(){
             var id = $(this).attr("data-close");
+            var index = disabledArray.indexOf(id);
+            disabledArray.splice(index, 1);
             $("#" + id).attr("disabled", false);
             $("#" + id).animate({opacity: 1}, "fast");
             $("#newRow" + id).remove();
