@@ -23,6 +23,8 @@ body {
 }
 .newRow{
     margin: 10px;
+    border-top: 2px solid white;
+    padding-top: 5px;
 }
 .divHeader{
     text-align: center;
