@@ -239,6 +239,7 @@ $("document").ready(function () {
                 $("#newRow" + id).remove();
             }
             searchArray.splice(id,1);
+            display_btns();
             },
             ondropdeactivate: function (event) {
             // remove active dropzone feedback
