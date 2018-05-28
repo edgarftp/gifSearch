@@ -15,7 +15,7 @@ $("document").ready(function () {
         for (i = 0; i < searchArray.length; i++) {
             var newBtn = $("<button>").text(searchArray[i]);
             newBtn.attr("id", i);
-            newBtn.attr("class", "btn btn-success m-1 btn-sm gifBtn draggable");
+            newBtn.attr("class", "btn btn-success m-1 btn-sm gifBtn");
             $("#btnHolder").append(newBtn);
         }
 
@@ -130,19 +130,9 @@ $("document").ready(function () {
     }
    
    
-    $("#btnHolder").on("swipeleft", function(){
-        var id = $(this).id;
-        $("#" + id).addClass("swiped");
-        $("#btnHolder").on("click",".swiped", function(){
-            $("#" + id).delete();
-        })
+    $("#gifHolder").on("swipeleft","gifBtn",function(){
+        console.log("swiping");
     });
-
-    $("#btnHolder").on("click", ".gifBtn", function () {
-        var id = this.id;
-        display_gif(id);
-    });
-
 
     $("#gifHolder").on("click", "img", function () {
         var state = $(this).attr("data-state");
