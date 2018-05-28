@@ -45,3 +45,8 @@ body {
 .imgBtnHolder {
     text-align: center;
 }
+#instructions {
+    color: white;
+    margin: 0px 20px;
+    font-style: oblique;
+}
