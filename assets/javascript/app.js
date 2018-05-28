@@ -77,7 +77,6 @@ $("document").ready(function() {
             method: "GET"
         }).then(function(response){
             result = response.data;
-            console.log(result);
             rand_num(result.length,4);
             var newRow = $("<div>");
             newRow.addClass("row newRow");
@@ -105,9 +104,9 @@ $("document").ready(function() {
                 var imgHolder = $("<div>");
                 imgHolder.addClass("col-12");
                 var img = $("<img>");
-                img.attr("src", result[randArray[i]].images.fixed_width_small_still.url);
-                img.attr("data-still", result[randArray[i]].images.fixed_width_small_still.url);
-                img.attr("data-animate", result[randArray[i]].images.fixed_width_small.url);
+                img.attr("src", result[randArray[i]].images.downsized_still.url);
+                img.attr("data-still", result[randArray[i]].images.downsized_still.url);
+                img.attr("data-animate", result[randArray[i]].images.downsized.url);
                 img.attr("data-state", "still");
                 img.attr("id", gif + "-" + i);
                 img.addClass("col-md-12 gif");
@@ -131,22 +130,18 @@ $("document").ready(function() {
         })
 
         $("#gifHolder").unbind().on("click", "img", function(){
-           console.log(this);
            var state = $(this).attr("data-state");
 
            if (state == "still") {
-               console.log("hey WAS still");
                $(this).attr("src", $(this).attr("data-animate"));
                $(this).attr("data-state", "animate");
            }else{
-                console.log("hey i WAS moving");
                 $(this).attr("src", $(this).attr("data-still"));
                 $(this).attr("data-state", "still");
            }
         })
 
         $(document.body).unbind().on("click", ".closeBtn", function(){
-            console.log(this);
             var id = $(this).attr("data-close");
             var index = disabledArray.indexOf(id);
             disabledArray.splice(index,1);
