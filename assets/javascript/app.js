@@ -60,7 +60,6 @@ $("document").ready(function () {
     });
 
     function display_gif(id) {
-        console.log(id);
         disabledArray.push(id);
         var name = searchArray[id];
         var gif = searchArray[id];
@@ -129,33 +128,20 @@ $("document").ready(function () {
             $("#gifHolder").prepend(newRow);
         })
     }
-    //-----------------------------------------------------------------
-    //----------timer for doubleclick-------------------------
-    var timer = 0;
-    var delay = 200;
-    var prevent = false;
-    
-    $("#btnHolder")
-        .on("click",".gifBtn", function() {
-            var id = this.id;
-        timer = setTimeout(function() {
-          if (!prevent) {
-              console.log(event);
-            display_gif(id);
-          }
-          prevent = false;
-        }, delay);
-      })
-      .on("dblclick",".gifBtn", function() {
-        clearTimeout(timer);
-        prevent = true;
+   
+   
+    $("#btnHolder").on("swipeleft", function(){
+        var id = $(this).id;
+        $("#" + id).addClass("swiped");
+        $("#btnHolder").on("click",".swiped", function(){
+            $("#" + id).delete();
+        })
+    });
+
+    $("#btnHolder").on("click", ".gifBtn", function () {
         var id = this.id;
-        $("#" + id).remove();
-        disabledArray.splice(id, 1);
-      });
-
-      //-----------------------------------------------------------------
-
+        display_gif(id);
+    });
 
 
     $("#gifHolder").on("click", "img", function () {
