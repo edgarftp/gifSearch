@@ -1,0 +1,35 @@
+@keyframes AnimationName { 
+    0%{background-position:0% 14%}
+    50%{background-position:100% 87%}
+    100%{background-position:0% 14%}
+}
+
+body {
+    background: linear-gradient(136deg, #0d0d0d, #516d73, #0b3b40, #0b2426, #545857);
+    background-size: 10000% 10000%;
+    animation: AnimationName 20s ease infinite;
+    font-family: monospace;
+}
+
+#btnHolder {
+    margin: 10px 10px;
+}
+
+#gifHolder {
+    margin: 10px 10px;
+}
+.gifRow {
+    
+    margin: 10px 10px;
+}
+.newRow{
+    margin: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid white;
+}
+.divHeader{
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    font-size: 20px;
+}
