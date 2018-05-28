@@ -15,7 +15,7 @@ $("document").ready(function () {
         for (i = 0; i < searchArray.length; i++) {
             var newBtn = $("<button>").text(searchArray[i]);
             newBtn.attr("id", i);
-            newBtn.attr("class", "btn btn-success m-1 btn-sm gifBtn");
+            newBtn.attr("class", "btn btn-success m-1 btn-sm gifBtn draggable");
             $("#btnHolder").append(newBtn);
         }
 
@@ -60,6 +60,7 @@ $("document").ready(function () {
     });
 
     function display_gif(id) {
+        console.log(id);
         disabledArray.push(id);
         var name = searchArray[id];
         var gif = searchArray[id];
@@ -128,11 +129,35 @@ $("document").ready(function () {
             $("#gifHolder").prepend(newRow);
         })
     }
-   
-   
-    $("#gifHolder").on("swipeleft","gifBtn",function(){
-        console.log("swiping");
-    });
+    //-----------------------------------------------------------------
+    //----------timer for doubleclick-------------------------
+    
+    var timer = 0;
+    var delay = 200;
+    var prevent = false;
+    
+    $("#btnHolder")
+        .on("click",".gifBtn", function() {
+            var id = this.id;
+        timer = setTimeout(function() {
+          if (!prevent) {
+              console.log(event);
+            display_gif(id);
+          }
+          prevent = false;
+        }, delay);
+      })
+      .on("dblclick",".gifBtn", function() {
+        clearTimeout(timer);
+        prevent = true;
+        var id = this.id;
+        $("#" + id).remove();
+        disabledArray.splice(id, 1);
+      });
+
+      //-----------------------------------------------------------------
+
+
 
     $("#gifHolder").on("click", "img", function () {
         var state = $(this).attr("data-state");
