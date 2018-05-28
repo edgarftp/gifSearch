@@ -12,6 +12,14 @@ $("document").ready(function () {
 
     function display_btns() {
         $("#btnHolder").empty();
+        var dragZone = $("<div>");
+        var imgTrash = $("<img>");
+            imgTrash.attr("src", "assets/images/trash.png");
+            imgTrash.attr("id", "trashcanImg")
+            dragZone.attr("id", "trashcan");
+            dragZone.attr("class", "btn btn-danger m-1 col-1 btn-sm  dropzone");
+            dragZone.append(imgTrash);
+            $("#btnHolder").append(dragZone);
         for (i = 0; i < searchArray.length; i++) {
             var newBtn = $("<button>").text(searchArray[i]);
             newBtn.attr("id", i);
@@ -129,33 +137,110 @@ $("document").ready(function () {
             $("#gifHolder").prepend(newRow);
         })
     }
-    //-----------------------------------------------------------------
-    //----------timer for doubleclick-------------------------
-    
-    var timer = 0;
-    var delay = 200;
-    var prevent = false;
-    
-    $("#btnHolder")
-        .on("click",".gifBtn", function() {
-            var id = this.id;
-        timer = setTimeout(function() {
-          if (!prevent) {
-              console.log(event);
-            display_gif(id);
-          }
-          prevent = false;
-        }, delay);
+      $("#btnHolder").on("click",".gifBtn", function() {
+          var id = this.id;
+          display_gif(id);
+          display_btns();
       })
-      .on("dblclick",".gifBtn", function() {
-        clearTimeout(timer);
-        prevent = true;
-        var id = this.id;
-        $("#" + id).remove();
-        disabledArray.splice(id, 1);
+      //------------------------------------------------------------------
+      interact('.draggable')
+      .draggable({
+        // enable inertial throwing
+        inertia: true,
+        // keep the element within the area of it's parent
+        restrict: {
+          restriction: "parent",
+          endOnly: true,
+          elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+        },
+        // enable autoScroll
+        autoScroll: true,
+    
+        // call this function on every dragmove event
+        onmove: dragMoveListener,
+        // call this function on every dragend event
+        onend: function (event) {
+          var textEl = event.target.querySelector('p');
+    
+          textEl && (textEl.textContent =
+            'moved a distance of '
+            + (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
+                         Math.pow(event.pageY - event.y0, 2) | 0))
+                .toFixed(2) + 'px');
+        }
       });
+    
+      function dragMoveListener (event) {
+        var target = event.target,
+            // keep the dragged position in the data-x/data-y attributes
+            x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+            y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+    
+        // translate the element
+        target.style.webkitTransform =
+        target.style.transform =
+          'translate(' + x + 'px, ' + y + 'px)';
+    
+        // update the posiion attributes
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
+      }
+    
+      // this is used later in the resizing and gesture demos
+      window.dragMoveListener = dragMoveListener;
+        /* The dragging code for '.draggable' from the demo above
+        * applies to this demo as well so it doesn't have to be repeated. */
 
-      //-----------------------------------------------------------------
+        // enable draggables to be dropped into this
+        interact('.dropzone').dropzone({
+            // only accept elements matching this CSS selector
+            accept: '.draggable',
+            // Require a 75% element overlap for a drop to be possible
+            overlap: 0.2,
+        
+            // listen for drop related events:
+        
+            ondropactivate: function (event) {
+            // add active dropzone feedback
+            
+            event.target.classList.add('drop-active');
+            },
+            ondragenter: function (event) {
+            var draggableElement = event.relatedTarget,
+                dropzoneElement = event.target;
+            // feedback the possibility of a drop
+            console.log("in");
+            dropzoneElement.classList.add('drop-target');
+            draggableElement.classList.add('can-drop');
+            draggableElement.classList.remove('btn-success');
+            draggableElement.classList.add('btn-danger');
+            },
+            ondragleave: function (event) {
+            // remove the drop feedback style
+            console.log("out");
+            event.target.classList.remove('drop-target');
+            event.relatedTarget.classList.remove('can-drop');
+            event.relatedTarget.classList.remove('btn-danger');
+            event.relatedTarget.classList.add('btn-success');
+            },
+            ondrop: function (event) {
+            var id = event.dragEvent.currentTarget.id;
+            var index = disabledArray.indexOf(id);
+            console.log(id);
+            $("#" + id).remove();
+            if(index >=0){
+                disabledArray.splice(index, 1);
+            }
+            searchArray.splice(id,1);
+            },
+            ondropdeactivate: function (event) {
+            // remove active dropzone feedback
+            event.target.classList.remove('drop-active');
+            event.target.classList.remove('drop-target');
+            
+            }
+        });
+      //--------------------------------------------------------------
 
 
 
