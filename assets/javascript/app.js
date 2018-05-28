@@ -87,7 +87,7 @@ $("document").ready(function() {
             divHeader.addClass("col-md-11 d-inline divHeader");
             divHeader.text(name);
             var closeBtn = $("<button>");
-            closeBtn.text("x");
+            closeBtn.text("close");
             closeBtn.addClass("btn btn-danger btn-sm col-md-1 d-inline closeBtn");
             closeBtn.attr("data-close", id);
             divHeaderRow.append(divHeader);
